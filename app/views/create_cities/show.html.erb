@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @create_city.name %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @create_city.state %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @create_city.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @create_city.longitude %>
+</p>
+
+<p>
+  <b>Gmaps:</b>
+  <%= @create_city.gmaps %>
+</p>
+
+<p>
+  <b>Population:</b>
+  <%= @create_city.population %>
+</p>
+
+
+<%= link_to 'Edit', edit_create_city_path(@create_city) %> |
+<%= link_to 'Back', create_cities_path %>
