@@ -1,0 +1,19 @@
+<h1>Listing operators</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th></th>
+  </tr>
+
+<% @operators.each do |operator| %>
+  <tr>
+    <td><%= operator.name %></td>
+    <td><%= operator.code %></td>
+    <td><%= link_to 'Show', operator %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

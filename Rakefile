@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Google::Application.load_tasks
+Visualizapp::Application.load_tasks

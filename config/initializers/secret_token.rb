@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Google::Application.config.secret_token = '59932484516ec5e6c196aa31aa52853396d03428907ec15d7d9a6d26402dd739f0fe5b3bfc228ebab1ca61955a3b8f3f22fd876b1dbacf0a3d495499407680c1'
+Visualizapp::Application.config.secret_token = '2418e6e5d62bf565dd70dd210593ed62d35a60120b77d6ed8ffd93ff6c538fc912da1c2fbb9654a508bc0bc8be48d149489e54e7cb6f5fca8edc4cf3f09a3c28'

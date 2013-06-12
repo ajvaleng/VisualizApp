@@ -1,0 +1,21 @@
+<%= form_for(@recorrido) do |f| %>
+  <% if @recorrido.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recorrido.errors.count, "error") %> prohibited this recorrido from being saved:</h2>
+
+      <ul>
+      <% @recorrido.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

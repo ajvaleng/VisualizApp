@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p></p>
+
+<%= select_tag :recorrido, options_for_select(@recorridos.map { |u| [u.code, u.id] }), :prompt => "Seleccione un Recorrido", include_blank: true , class: 'chzn-select' %>
+
+<p></p>
+
+<div id="mapa">
+	<%= gmaps({
+		"map_options" => { "zoom" => 13, "center_on_user" => true }
+     })
+ %>
+</div>
