@@ -78,6 +78,7 @@ class @Gmaps4Rails
       strokeWeight: 2
       clickable: false
       zIndex: null
+      icons: null
 
   #tnitializes the map
   initialize : ->

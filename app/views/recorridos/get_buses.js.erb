@@ -1,1 +1,7 @@
-Gmaps.map.addMarkers(<%== @buses2.to_json %>)
+Gmaps.map.addMarkers(<%== @buses2.to_json %>);
+Gmaps.map.polylines[0][0].strokeColor = 'FF0000';
+
+
+// Gmaps.map.polylines[0][0].icons = {['icon': { 'path': 'M 2,-5 2,5 3.5, 2', 'strokeOpacity': 1}, 'offset': '50%'}]};
+
+Gmaps.map.replacePolylines(Gmaps.map.polylines);

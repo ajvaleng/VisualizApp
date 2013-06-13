@@ -21,13 +21,14 @@ class RecorridosController < ApplicationController
 
     secuencias.each_with_index do |s, i|
       @polylines[i] = []
-      Shape.where(:code => s.code).first.points.each do |p|
-        @polylines[i] << {:lat => p.lat, :lng => p.lng }
+      Shape.where(:code => s.code).first.points.each_with_index do |p, e|
+        e == 0 ? @polylines[i] << {:strokeColor => '#000000', :icons => [], :lat => p.lat, :lng => p.lng } : @polylines[i] << {:lat => p.lat, :lng => p.lng }
       end
       s.stops.each do |stop|
         @stops << {:title => stop.code, :lat => stop.lat, :lng => stop.lng,:width => 24, :height => 24, :picture => "http://www.misiondevida.cl/w4/images/Filo/parada_24.png" }
       end
     end
+
 
     respond_to do |format|
       format.js
@@ -55,7 +56,8 @@ class RecorridosController < ApplicationController
             :lng => bus['gps_longitud'],
             :width => 62,
             :height => 24,
-            :picture => "http://www.misiondevida.cl/w4/images/Filo/bus_24.png"
+            :picture => "http://www.misiondevida.cl/w4/images/Filo/bus_24.png",
+            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
           }
         end
       }

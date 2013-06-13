@@ -268,6 +268,7 @@ class @Gmaps4RailsGoogle extends Gmaps4Rails
           strokeWeight  = element.strokeWeight  || @polylines_conf.strokeWeight
           clickable     = element.clickable     || @polylines_conf.clickable
           zIndex        = element.zIndex        || @polylines_conf.zIndex
+          icons         = element.icons         || @polylines_conf.icons
 
         #add latlng if positions provided
         if element.lat? && element.lng?
@@ -282,6 +283,7 @@ class @Gmaps4RailsGoogle extends Gmaps4Rails
       strokeWeight: strokeWeight
       clickable:    clickable
       zIndex:       zIndex
+      icons:        icons
 
     #save polyline
     polyline.serviceObject = new_poly
