@@ -33,6 +33,7 @@ gem "bootstrap-sass", ">= 2.3.0.0"
 gem "cancan"
 gem "rolify", ">= 3.2.0"
 gem "simple_form", ">= 2.1.0"
+gem 'rails_admin'
 
 group :production do
 	gem 'mongo'
