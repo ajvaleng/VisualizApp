@@ -1,5 +1,22 @@
+var polylines = <%== @polylines.to_json %>
 
-  Gmaps.map.replacePolylines(<%== @polylines.to_json %>);
-  Gmaps.map.addMarkers(<%== @stops.to_json %>);
+polylines[0][0].strokeColor = 'FF0000'
+polylines[1][0].strokeColor = '0000FF'
+
+var lineSymbol = {
+  path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+};
+
+polylines[0][0].icons = [{
+    icon: lineSymbol,
+    repeat: '2%'
+  }];
+
+polylines[1][0].icons = [{
+    icon: lineSymbol,
+    repeat: '2%'
+  }];
+
+Gmaps.map.replacePolylines(polylines);
+Gmaps.map.addMarkers(<%== @stops.to_json %>);
   // alert(Gmaps.map.polylines.[0]);
-  

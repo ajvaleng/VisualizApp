@@ -25,7 +25,7 @@ class RecorridosController < ApplicationController
         e == 0 ? @polylines[i] << {:strokeColor => '#000000', :icons => [], :lat => p.lat, :lng => p.lng } : @polylines[i] << {:lat => p.lat, :lng => p.lng }
       end
       s.stops.each do |stop|
-        @stops << {:title => stop.code, :lat => stop.lat, :lng => stop.lng,:width => 24, :height => 24, :picture => "http://www.misiondevida.cl/w4/images/Filo/parada_24.png" }
+        @stops << {:title => stop.code, :lat => stop.lat, :lng => stop.lng,:width => 24, :height => 28, :picture => "../images/parada_24.png" }
       end
     end
 
@@ -50,13 +50,28 @@ class RecorridosController < ApplicationController
     respond_to do |format|
       format.js{
         @buses2 = []
+        @buses3 = []
         @buses.each do |bus|
           @buses2 << {
             :lat => bus['gps_latitud'],
             :lng => bus['gps_longitud'],
-            :width => 62,
-            :height => 24,
-            :picture => "http://www.misiondevida.cl/w4/images/Filo/bus_24.png",
+            :width => 41,
+            :height => 16,
+            :direction => bus['sentido'],
+            :patente => bus['patente'],
+            :zIndex => 3,
+            :picture => "../images/bus_"+bus['sentido']+"_16.png",
+            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
+          }
+          @buses3 << {
+            :lat => bus['gps_latitud'],
+            :lng => bus['gps_longitud'],
+            :width => 41,
+            :height => 16,
+            :direction => bus['sentido'],
+            :patente => bus['patente'],
+            :zIndex => 3,
+            :picture => "../images/bus_16.png",
             :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
           }
         end
