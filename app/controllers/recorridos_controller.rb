@@ -63,17 +63,17 @@ class RecorridosController < ApplicationController
             :picture => "../images/bus_"+bus['sentido']+"_16.png",
             :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
           }
-          @buses3 << {
-            :lat => bus['gps_latitud'],
-            :lng => bus['gps_longitud'],
-            :width => 41,
-            :height => 16,
-            :direction => bus['sentido'],
-            :patente => bus['patente'],
-            :zIndex => 3,
-            :picture => "../images/bus_16.png",
-            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
-          }
+          # @buses3 << {
+          #   :lat => bus['gps_latitud'],
+          #   :lng => bus['gps_longitud'],
+          #   :width => 41,
+          #   :height => 16,
+          #   :direction => bus['sentido'],
+          #   :patente => bus['patente'],
+          #   :zIndex => 3,
+          #   :picture => "../images/bus_16.png",
+          #   :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
+          # }
         end
       }
       format.json {
