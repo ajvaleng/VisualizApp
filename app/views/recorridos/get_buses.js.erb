@@ -1,4 +1,9 @@
-var buses = <%== @buses2.to_json %> ;
+$.each(Gmaps.map.markers, function (index, marker){
+		if(marker.type == 'bus')
+			Gmaps.map.clearMarker(marker);
+	});
+
+buses = <%== @buses2.to_json %> ;
 $.each(buses, function(index, bus) {
   console.log(bus.patente);
   var polyline;
@@ -9,17 +14,4 @@ $.each(buses, function(index, bus) {
   move_bus_to_polyline(bus, polyline);
 });
 
-Gmaps.map.addMarkers(buses);
-// Gmaps.map.addMarkers(<%== @buses3.to_json %>);
-
-// var goldStar = {
-//   path: 'M 566.16677,231.14012 C 566.17704,254.99373 546.84274,274.33634 522.98914,274.33634 C 499.13553,274.33634 479.80123,254.99373 479.8115,231.14012 C 479.80123,207.28651 499.13553,187.9439 522.98914,187.9439 C 546.84274,187.9439 566.17704,207.28651 566.16677,231.14012 L 566.16677,231.14012 z',
-//   fillOpacity: 0.8,
-//   scale: 0.1,
-//   strokeColor: "gold",
-//   strokeWeight: 14
-// };
-
-// Gmaps.map.polylines[0][0].icons.push({icon: goldStar, repeat: '10%'});
-
-Gmaps.map.replacePolylines(Gmaps.map.polylines);
+Gmaps.map.addMarkers(buses, false);

@@ -25,7 +25,7 @@ class RecorridosController < ApplicationController
         e == 0 ? @polylines[i] << {:strokeColor => '#000000', :icons => [], :lat => p.lat, :lng => p.lng } : @polylines[i] << {:lat => p.lat, :lng => p.lng }
       end
       s.stops.each do |stop|
-        @stops << {:title => stop.code, :lat => stop.lat ,:lng => stop.lng,:width => 24, :height => 28, :picture => "../images/parada_24.png" }
+        @stops << {:title => stop.code, :lat => stop.lat ,:lng => stop.lng,:width => 24, :height => 28, :picture => "../images/parada_24.png", :type => 'stop' }
       end
     end
 
@@ -60,6 +60,7 @@ class RecorridosController < ApplicationController
             :direction => bus['sentido'],
             :patente => bus['patente'],
             :zindex => 1000,
+            :type => 'bus',
             :picture => "../images/bus_"+bus['sentido']+"_16.png",
             :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
           }

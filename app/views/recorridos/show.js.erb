@@ -1,6 +1,6 @@
-var polylines = <%== @polylines.to_json %>
+var polylines = <%== @polylines.to_json %>;
 
-polylines[0][0].strokeColor = 'FF0000'
+polylines[0][0].strokeColor = '457027'
 polylines[1][0].strokeColor = '0000FF'
 
 var lineSymbol = {
@@ -18,5 +18,6 @@ polylines[1][0].icons = [{
   }];
 
 Gmaps.map.replacePolylines(polylines);
-Gmaps.map.addMarkers(<%== @stops.to_json %>);
+stops = <%== @stops.to_json %>;
+Gmaps.map.addMarkers(stops);
   // alert(Gmaps.map.polylines.[0]);
