@@ -73,6 +73,23 @@ class RecorridosController < ApplicationController
           texto_diferencia <<  dif_minutos.to_s+" minutos, " if dif_minutos > 0
           texto_diferencia <<  dif_secs.to_s+" segundos." if dif_secs > 0
 
+          # calcular la retencion
+          # raise 'hh'
+          recorrido = Recorrido.where(:id => id.to_i).first
+          tiempo_retencion = 0
+          retencion_correcta = nil
+
+          bus['retenciones'].each do |retencion|
+            bus['sentido'] == 'I' ? secuencia = recorrido.get_secuencias_of_the_hour[0] : secuencia = recorrido.get_secuencias_of_the_hour[1]
+            stop = secuencia.stops.where(:id => retencion['paradero_id']).first
+            if not stop.nil? and stop.origin_distance > bus['distancia_origen']
+              tiempo_retencion = -1 if retencion['segundos_retencion'] > 0
+              tiempo_retencion = 1 if retencion['segundos_retencion'] < 0
+              retencion_correcta = retencion if retencion['segundos_retencion'] != 0
+              break;
+            end
+          end
+
           @buses2 << {
             :lat => bus['gps_latitud'],
             :lng => bus['gps_longitud'],
@@ -82,9 +99,9 @@ class RecorridosController < ApplicationController
             :patente => bus['patente'],
             :zindex => 1000,
             :type => 'bus',
-            :stop => true,
+            :stop => tiempo_retencion,
             :picture => "../images/bus_"+bus['sentido']+"_16.png",
-            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus, :time_dif => texto_diferencia})
+            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus, :time_dif => texto_diferencia, :retencion => retencion_correcta})
           }
           @signs << {
             :lat => bus['gps_latitud'],

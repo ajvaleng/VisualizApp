@@ -14,8 +14,14 @@ $.each(buses, function(index, bus) {
   	polyline = Gmaps.map.polylines[1]
   move_bus_to_polyline(bus, polyline);
   // console.log(bus);
-  if(bus.stop)
+  if(bus.stop != 0)
   {
+    var imagen = '';
+    if(bus.stop == -1)
+      imagen = '../images/stop_18.png';
+    else
+      imagen = '../images/up_18.png';
+    console.log(imagen);
     stop_signs.push({
       lat: bus.lat,
       lng: bus.lng,
@@ -23,7 +29,7 @@ $.each(buses, function(index, bus) {
       height: 18,
       zindex: 1001,
       type: 'sign',
-      picture: "../images/stop_18.png",
+      picture: imagen,
       description: bus.description
     });
   }

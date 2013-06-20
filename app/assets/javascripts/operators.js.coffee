@@ -24,7 +24,6 @@ $ ->
       get_buses()
       refreshIntervalId = setInterval( get_buses, 10000)
       console.log 'id: '+refreshIntervalId
-      # get_buses(this.value)
 
 
   get_buses = () ->

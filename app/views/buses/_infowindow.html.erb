@@ -3,3 +3,9 @@
 <p>Velocidad Instantanea:<%= bus['velocidad_instantanea']  %></p>
 <p>Sentido: <%= bus['sentido']  %></p>
 <p>Distancia Origen: <%= bus['distancia_origen']  %></p>
+
+<% unless retencion.nil? %>
+<h6>Retención:</h6>
+<p>Paradero: <%= retencion['codigo_paradero']  %></p>
+<p>Tiempo de Retención: <%= retencion['segundos_retencion']  %></p>
+<% end %>
