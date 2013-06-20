@@ -10,7 +10,7 @@ function move_bus_to_polyline(bus, polyline)
 			dist = distHaversine(middle , bus);
 			if( dist < min_distance )
 			{
-				console.log('cambio de tramo');
+				// console.log('cambio de tramo');
 				min_distance = dist;
 				point1= point;
 				point2 = polyline[index + 1];
@@ -21,7 +21,7 @@ function move_bus_to_polyline(bus, polyline)
 	precicion = 10
 	var dif_lat = (point1.lat - point2.lat)/precicion
 	var dif_lng = (point1.lng - point2.lng)/precicion
-	console.log('dif_lat: '+dif_lat+' dif_lng: '+dif_lng);
+	// console.log('dif_lat: '+dif_lat+' dif_lng: '+dif_lng);
 	min_distance = 1000;
 	for (var i=0;i<precicion;i++)
 	{
@@ -29,7 +29,7 @@ function move_bus_to_polyline(bus, polyline)
 		dist = distHaversine(middle , bus);
 		if( dist < min_distance )
 		{
-			console.log('cambio de posicion');
+			// console.log('cambio de posicion');
 			min_distance = dist;
 			bus.lat = middle.lat;
 			bus.lng = middle.lng;

@@ -25,7 +25,13 @@ class RecorridosController < ApplicationController
         e == 0 ? @polylines[i] << {:strokeColor => '#000000', :icons => [], :lat => p.lat, :lng => p.lng } : @polylines[i] << {:lat => p.lat, :lng => p.lng }
       end
       s.stops.each do |stop|
-        @stops << {:title => stop.code, :lat => stop.lat ,:lng => stop.lng,:width => 24, :height => 28, :picture => "../images/parada_24.png", :type => 'stop' }
+        @stops << {:title => stop.code,
+         :lat => stop.lat,
+         :lng => stop.lng,
+         :width => 24,
+         :height => 28,
+         :picture => "../images/parada_24.png", :type => 'stop',
+         :description => render_to_string(:partial => "/recorridos/stop_infowindow", :locals => { :stop => stop})}
       end
     end
 
@@ -50,8 +56,23 @@ class RecorridosController < ApplicationController
     respond_to do |format|
       format.js{
         @buses2 = []
-        @buses3 = []
+        @signs = []
         @buses.each do |bus|
+          # calculo del tiempo
+          now = Time.new
+          time = bus['fecha_hora_gps'].split('T')[1].split(':')
+          t = Time.new(now.year, now.month, now.day, time[0].to_i, time[1].to_i, time[2].to_i,'+00:00')
+          dif = (now - t).to_i
+          dif_horas = (dif/3600).to_i
+          dif -= dif_horas * 3600
+          dif_minutos = (dif/60).to_i
+          dif -= dif_minutos * 60
+          dif_secs = dif
+          texto_diferencia = "Hace "
+          texto_diferencia <<  dif_horas.to_s+" horas, " if dif_horas > 0
+          texto_diferencia <<  dif_minutos.to_s+" minutos, " if dif_minutos > 0
+          texto_diferencia <<  dif_secs.to_s+" segundos." if dif_secs > 0
+
           @buses2 << {
             :lat => bus['gps_latitud'],
             :lng => bus['gps_longitud'],
@@ -61,20 +82,18 @@ class RecorridosController < ApplicationController
             :patente => bus['patente'],
             :zindex => 1000,
             :type => 'bus',
+            :stop => true,
             :picture => "../images/bus_"+bus['sentido']+"_16.png",
-            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
+            :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus, :time_dif => texto_diferencia})
           }
-          # @buses3 << {
-          #   :lat => bus['gps_latitud'],
-          #   :lng => bus['gps_longitud'],
-          #   :width => 41,
-          #   :height => 16,
-          #   :direction => bus['sentido'],
-          #   :patente => bus['patente'],
-          #   :zIndex => 3,
-          #   :picture => "../images/bus_16.png",
-          #   :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus})
-          # }
+          @signs << {
+            :lat => bus['gps_latitud'],
+            :lng => bus['gps_longitud'],
+            :width => 18,
+            :height => 18,
+            :zIndex => 1001,
+            :picture => "../images/stop_18.png"
+          }
         end
       }
       format.json {
