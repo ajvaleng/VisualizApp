@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>File:</b>
+  <%= @data_file.file.url.split('/').last %>
+</p>
+
+<p>
+  <%=link_to 'Download file', @data_file.file_url%>
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_data_file_path(@data_file) %> |
+<%= link_to 'Back', data_files_path %>

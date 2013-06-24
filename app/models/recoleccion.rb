@@ -17,4 +17,19 @@ class Recoleccion
     dias.include? (semana[fecha.wday])
   end
   
+  
+  rails_admin do
+    list do
+      field :presonas_suben
+      field :personas_bajan
+      field :paradero
+      field :recorrido
+      field :patente
+      field :nombre
+      field :puerta
+      field :llegada_paradero
+      field :salida_paradero
+    end
+  end
+  
 end

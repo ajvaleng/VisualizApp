@@ -2,6 +2,8 @@ class User
   include Mongoid::Document
   rolify
   include Mongoid::Timestamps
+  
+  has_and_belongs_to_many :data_files, inverse_of: nil
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -48,4 +50,12 @@ class User
   field :name, :type => String
   validates_presence_of :name
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
+  
+  rails_admin do
+    list do
+      field :email 
+      field :name
+    end
+  end
+  
 end
