@@ -5,7 +5,7 @@ class Ability
     if user
       can :access, :rails_admin       # only allow admin users to access Rails Admin
       can :dashboard                  # allow access to dashboard
-      if user.has_role? :Superadmin
+      if user.has_role? :SuperAdmin
         can :manage, :all             # allow superadmins to do anything
       elsif user.has_role? :OperadorAdmin
         can :manage, [DataFile, Recoleccion,User]  # allow managers to do anything to products and users

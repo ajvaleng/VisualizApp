@@ -10,7 +10,7 @@
 
 puts 'ROLES'
 Role.destroy_all
-Role.create({ :name => "Superadmin" }, :without_protection => true)
+Role.create({ :name => "SuperAdmin" }, :without_protection => true)
 Role.create({ :name => "OperadorAdmin" }, :without_protection => true)
 Role.create({ :name => "Operador" }, :without_protection => true)
 
@@ -20,6 +20,6 @@ user1 = User.create! :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'
 user2 = User.create! :name => "Operador Admin", :email => "operadoradmin@example.com", :password => "12345678", :password_confirmation => "12345678"
 user3 = User.create! :name => "Operador", :email => "operador@example.com", :password => "12345678", :password_confirmation => "12345678"
 
-user1.add_role :Superadmin
+user1.add_role :SuperAdmin
 user2.add_role :OperadorAdmin
 user3.add_role :Operador
