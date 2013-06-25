@@ -7,6 +7,7 @@
       <th>Email</th>
       <th>Registered</th>
       <th>Role</th>
+      <th>Operador</th>
       <th></th>
       <th></th>
     </tr>
@@ -18,6 +19,7 @@
       <td><%= user.email %></td>
       <td><%= user.created_at.to_date %></td>
       <td><%= user.roles.first.name.titleize unless user.roles.first.nil? %></td>
+      <td><%= user.operator.name unless user.operator.nil? %></td>
       <td>
         <a data-toggle="modal" href="#role-options-<%= user.id %>" class="btn btn-mini" type="button">Change role</a>
         <%= render user %>
@@ -27,4 +29,6 @@
   <% end %>
   </tbody>
 </table>
+
+<%= link_to 'Nuevo Usuario', new_user_path  %>
 </div>
