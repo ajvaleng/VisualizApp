@@ -9,6 +9,8 @@
   width: 98%;
 }
 
+.map_container img { max-width: none; }
+
 .gmaps4rails_map {
   position: absolute;
   width: 100%;
