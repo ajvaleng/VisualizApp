@@ -1,0 +1,9 @@
+es:
+  mongoid:
+    models:
+      data_file: 
+        one: Archivo
+        other: Archivos
+    attributes:
+      data_file:
+        file: "Archivo"

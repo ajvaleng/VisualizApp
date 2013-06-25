@@ -1,11 +1,20 @@
 class Ability
   include CanCan::Ability
-
   def initialize(user)
-    user ||= User.new # guest user (not logged in)
-    if user.has_role? :admin
-      can :manage, :all
+    can :read, [Recoleccion, DataFile]                  # allow everyone to read everything
+    if user
+      can :access, :rails_admin       # only allow admin users to access Rails Admin
+      can :dashboard                  # allow access to dashboard
+      if user.has_role? :Administrador
+        can :manage, :all             # allow superadmins to do anything
+      elsif user.has_role? :AdminOperador
+        can :manage, [DataFile, Recoleccion,User]  # allow managers to do anything to products and users
+      # elsif user.has_role? :Operador
+      #   can :update, Product, :hidden => false  # allow sales to only update visible products
+      end
     end
+  end
+end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -28,5 +37,4 @@ class Ability
     #   can :update, Article, :published => true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-  end
-end
+

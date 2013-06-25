@@ -2,6 +2,8 @@ class User
   include Mongoid::Document
   rolify
   include Mongoid::Timestamps
+  
+  has_and_belongs_to_many :data_files, inverse_of: nil
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -51,9 +53,16 @@ class User
 
   belongs_to :operator
 
+  rails_admin do
+    list do
+      field :email
+      field :name
+    end
+  end
 
   def operator
     return Operator.find(operator_id.to_i) if operator_id
     nil
   end
+
 end

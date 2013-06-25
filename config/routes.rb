@@ -1,5 +1,8 @@
 Visualizapp::Application.routes.draw do
   
+  resources :data_files
+
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   resources :recorridos
