@@ -1,40 +1,49 @@
+
 $.each(Gmaps.map.markers, function (index, marker){
-		if(marker.type == 'bus' || marker.type == 'sign')
+		if(marker.type == 'bus' || marker.type == 'sign'){
 			Gmaps.map.clearMarker(marker);
+    }
 	});
 
-buses = <%== @buses2.to_json %> ;
+buses = <%== @buses2.to_json %>;
 stop_signs = [];
 $.each(buses, function(index, bus) {
+  // if((bus.direction == "I" && $('#check_ida').is(':checked')) || (bus.direction == "R" && $('#check_vuelta').is(':checked')))
+  // {
   // console.log(bus.patente);
-  var polyline;
-  if(bus.direction == "I")
-  	polyline = Gmaps.map.polylines[0]
-  else
-  	polyline = Gmaps.map.polylines[1]
-  move_bus_to_polyline(bus, polyline);
-  // console.log(bus);
-  if(bus.stop != 0)
-  {
-    var imagen = '';
-    if(bus.stop == -1)
-      imagen = '../images/stop_18.png';
+    var polyline;
+    if(bus.direction == "I")
+    	polyline = polylines[0];
     else
-      imagen = '../images/up_18.png';
-    console.log(imagen);
-    stop_signs.push({
-      lat: bus.lat,
-      lng: bus.lng,
-      width: 18,
-      height: 18,
-      zindex: 1001,
-      type: 'sign',
-      picture: imagen,
-      description: bus.description
-    });
-  }
-});
+    	polyline = polylines[1];
+    move_bus_to_polyline(bus, polyline);
+    // console.log(bus);
+    if(bus.stop != 0)
+    {
+      var imagen = '';
+      if(bus.stop == -1)
+        imagen = '../images/stop_18.png';
+      else
+        imagen = '../images/up_18.png';
 
+      stop_signs.push({
+        lat: bus.lat,
+        lng: bus.lng,
+        width: 18,
+        height: 18,
+        zindex: 1001,
+        type: 'sign',
+        picture: imagen,
+        direction: bus.direction,
+        description: bus.description
+      });
+    }
+  // }else
+  // {
+  //   console.log('Bus bloqueado');
+  //   // buses.remove(index);
+  // }
+});
 Gmaps.map.addMarkers(buses, false);
 Gmaps.map.addMarkers(stop_signs, false);
 $.each(Gmaps.map.markers, function (index, marker){

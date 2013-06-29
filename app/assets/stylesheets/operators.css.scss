@@ -1,3 +1,30 @@
 // Place all the styles related to the Operators controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#configuracion
+{
+	// overflow: hidden;
+	display: inline-block;
+}
+#recorridos
+{
+	float: left;
+}
+#opciones
+{
+	float: left;
+	overflow: hidden;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+#ida
+{
+	float: left;
+	padding-right: 30px;
+}
+#vuelta
+{
+	float: right;
+}
+

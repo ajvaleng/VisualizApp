@@ -31,6 +31,8 @@ class RecorridosController < ApplicationController
          :width => 24,
          :height => 28,
          :picture => "../images/parada_24.png", :type => 'stop',
+         :type => 'stop',
+         :ida => i,
          :description => render_to_string(:partial => "/recorridos/stop_infowindow", :locals => { :stop => stop})}
       end
     end
@@ -50,8 +52,12 @@ class RecorridosController < ApplicationController
       id = Recorrido.where(:code => params[:linea_codigo]).first.id
     end
 
-    response = HTTParty.get('http://citppuc.cloudapp.net/api/buses/?id_linea='+id.to_s)
-    @buses = JSON.parse(response.body)
+    begin
+      response = HTTParty.get('http://citppuc.cloudapp.net/api/buses/?id_linea='+id.to_s)
+      @buses = JSON.parse(response.body)
+    rescue
+      @buses = []
+    end
 
     respond_to do |format|
       format.js{
@@ -83,8 +89,8 @@ class RecorridosController < ApplicationController
             bus['sentido'] == 'I' ? secuencia = recorrido.get_secuencias_of_the_hour[0] : secuencia = recorrido.get_secuencias_of_the_hour[1]
             stop = secuencia.stops.where(:id => retencion['paradero_id']).first
             if not stop.nil? and stop.origin_distance > bus['distancia_origen']
-              tiempo_retencion = -1 if retencion['segundos_retencion'] > 0
-              tiempo_retencion = 1 if retencion['segundos_retencion'] < 0
+              tiempo_retencion = -1 if retencion['segundos_retencion'] >= 1
+              tiempo_retencion = 1 if retencion['segundos_retencion'] <= -1
               retencion_correcta = retencion if retencion['segundos_retencion'] != 0
               break;
             end

@@ -2,23 +2,40 @@
 
 <p></p>
 
-<%= select_tag :recorrido, options_for_select(@recorridos.map { |u| [u.code, u.id] }), :prompt => "Seleccione un Recorrido", include_blank: true , class: 'chzn-select' %>
+<div id='configuracion'>
+
+	<div id='recorridos'>
+		<%= select_tag :recorrido, options_for_select(@recorridos.map { |u| [u.code, u.id] }), :prompt => "Seleccione un Recorrido", include_blank: true , class: 'chzn-select' %>
+	</div>
+
+	<div id='opciones' style='visibility: hidden;'>
+		<div id='ida'>
+			<%= check_box_tag(:check_ida, 1, true) %>
+			<%= label_tag(:ida, "Ida") %>
+		</div>
+		<div id='vuelta'>
+			<%= check_box_tag(:check_vuelta,  1, true) %>
+			<%= label_tag(:vuelta, "Vuelta") %>
+		</div>
+	</div>
+
+</div>
 
 <p></p>
 
 <div id="mapa">
-	<%= gmaps({
-		"map_options" => { "zoom" => 13 }
-     })
- %>
+<%= gmaps({
+	"map_options" => { "center_longitude" => -70.642519, "center_latitude" => -33.458943, "zoom" => 13 }
+})
+%>
 <% content_for :scripts do %>
-  <script type="text/javascript">
-    // var trafficLayer = new google.maps.TrafficLayer();
-    // console.log(Gmaps.map.map);
-    // trafficLayer.setMap(Gmaps.map.map);
+	<script type="text/javascript">
+	// var trafficLayer = new google.maps.TrafficLayer();
+	// console.log(Gmaps.map.map);
+	// trafficLayer.setMap(Gmaps.map.map);
 
-  </script>
-<% end %>
+	</script>
+	<% end %>
 
 
-</div>
+	</div>
