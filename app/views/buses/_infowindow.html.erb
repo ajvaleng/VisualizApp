@@ -1,11 +1,37 @@
-<h4><%= bus['patente']  %></h4>
-<p><%= time_dif %></p>
-<p>Velocidad Instantanea:<%= bus['velocidad_instantanea']  %></p>
-<p>Sentido: <%= bus['sentido']  %></p>
-<p>Distancia Origen: <%= bus['distancia_origen']  %></p>
+<html>
+<body bgcolor="yellow">
+<h4><span style="color: green;"><center>Patente: <%= bus['patente']  %></span></center></h4>
+<center><table border="5" bordercolor="green">
+<tr >
+<td ><b>&nbsp;&nbsp;Tiempo medición:&nbsp;&nbsp;</b><p>&nbsp;&nbsp;<%= time_dif %>&nbsp;&nbsp;</p></td>
+</tr>
+<tr >
+<td ><b>&nbsp;&nbsp;Velocidad Instantanea:&nbsp;&nbsp;</b><p>&nbsp;&nbsp;<%= bus['velocidad_instantanea']%> km/h.&nbsp;&nbsp;</p></td>
+</tr>
+<tr>
+<td><b>&nbsp;&nbsp;Sentido:&nbsp;&nbsp;</b> <p>&nbsp;&nbsp;<%= bus['sentido']  %>&nbsp;&nbsp;</p></td>
+</tr>
+<tr>
+<td><b>&nbsp;&nbsp;Distancia Origen:&nbsp;&nbsp;</b> <p>&nbsp;&nbsp;<%= bus['distancia_origen']  %> km.&nbsp;&nbsp;</p></td>
+</tr>
+
+
+<tr>
+<td><b>&nbsp;&nbsp;HeadWay:&nbsp;&nbsp;</b> <p>&nbsp;&nbsp;<%= bus['minutos_headway']  %> km.&nbsp;&nbsp;</p>
+</td>
+</tr>
+
 
 <% unless retencion.nil? %>
-<h6>Retención:</h6>
-<p>Paradero: <%= retencion['codigo_paradero']  %></p>
-<p>Tiempo de Retención: <%= retencion['segundos_retencion']  %></p>
+<tr>
+<td>	
+<h6><b><span style="color: red;">&nbsp;&nbsp;&nbsp;&nbsp;Retención!!&nbsp;&nbsp;&nbsp;&nbsp;</span></b></h6>
+<p><b>&nbsp;&nbsp;&nbsp;&nbsp;Paradero:&nbsp;&nbsp;&nbsp;&nbsp;</b></p> <p>&nbsp;&nbsp;&nbsp;&nbsp;<%= retencion['codigo_paradero']  %>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p><b>&nbsp;&nbsp;&nbsp;&nbsp;Tiempo de Retención:&nbsp;&nbsp;&nbsp;&nbsp;</b></p><p> &nbsp;&nbsp;&nbsp;&nbsp;<%= retencion['segundos_retencion']  %>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+</td></tr>
 <% end %>
+
+</table></center>
+</body>
+</html>
