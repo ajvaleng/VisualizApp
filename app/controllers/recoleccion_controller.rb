@@ -1,8 +1,48 @@
-class RecoleccionController < ApplicationController
+class RecoleccionController < ApplicationController  
   require 'open-uri'
   require 'json'
+  
+  # GET /recoleccions
+  # GET /recoleccions.json
+  def index
+    @recoleccions = Recoleccion.all
 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @recoleccions }
+      format.csv { send_data @recoleccions.to_csv }
+    end
+  end
 
+  # GET /recoleccions/1
+  # GET /recoleccions/1.json
+  def show
+    @recoleccion = Recoleccion.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @recoleccion }
+    end
+  end
+
+  # GET /recoleccions/new
+  # GET /recoleccions/new.json
+  def new
+    @recoleccion = Recoleccion.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @recoleccion }
+    end
+  end
+
+  # GET /recoleccions/1/edit
+  def edit
+    @recoleccion = Recoleccion.find(params[:id])
+  end
+
+  # POST /recoleccions
+  # POST /recoleccions.json
   def create
     linea_id = nil
     recoleccions = Array.new
@@ -11,7 +51,8 @@ class RecoleccionController < ApplicationController
     linea_inicial = params[:linea]
     codigo_paradero_inicial=params[:paradero_inicial]
     secuencia_paraderos = nil
-      
+    
+    begin    
       # Buscar todas las lineas para encontrar el id
       lineas = JSON.parse(open("http://citppuc.cloudapp.net/api/lineas").read)
       #Accion para encontra el id
@@ -77,7 +118,8 @@ class RecoleccionController < ApplicationController
           invalid_recoleccion = recoleccion
         end
       end
-
+      puts "Paradero ecnontrado"
+    rescue
       puts "Error al encontrar el paradero"
       params[:recoleccion].each do |recoleccion|
         recoleccion["patente"] = params[:patente]
@@ -92,6 +134,7 @@ class RecoleccionController < ApplicationController
           invalid_recoleccion = recoleccion
         end
       end
+    end
     
     respond_to do |format|
       if all_recoleccion_valid
@@ -100,10 +143,40 @@ class RecoleccionController < ApplicationController
           recoleccion.save
           @recoleccions << recoleccion
         end
+        format.html { redirect_to @recoleccions.first, notice: 'Recoleccion was successfully created.' }
         format.json { render json: @recoleccions, status: :created }
       else
+        format.html { render action: "new" }
         format.json { render json: invalid_recoleccion.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PUT /recoleccions/1
+  # PUT /recoleccions/1.json
+  def update
+    @recoleccion = Recoleccion.find(params[:id])
+
+    respond_to do |format|
+      if @recoleccion.update_attributes(params[:recoleccion])
+        format.html { redirect_to @recoleccion, notice: 'Recoleccion was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @recoleccion.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /recoleccions/1
+  # DELETE /recoleccions/1.json
+  def destroy
+    @recoleccion = Recoleccion.find(params[:id])
+    @recoleccion.destroy
+
+    respond_to do |format|
+      format.html { redirect_to recoleccions_url }
+      format.json { head :no_content }
     end
   end
 end
