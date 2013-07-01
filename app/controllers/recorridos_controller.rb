@@ -26,14 +26,14 @@ class RecorridosController < ApplicationController
       end
       s.stops.each do |stop|
         @stops << {:title => stop.code,
-         :lat => stop.lat,
-         :lng => stop.lng,
-         :width => 24,
-         :height => 28,
-         :picture => "../images/parada_24.png", :type => 'stop',
-         :type => 'stop',
-         :ida => i,
-         :description => render_to_string(:partial => "/recorridos/stop_infowindow", :locals => { :stop => stop})}
+          :lat => stop.lat,
+          :lng => stop.lng,
+          :width => 12,
+          :height => 14,
+          :picture => "../images/parada_12.png", :type => 'stop',
+          :type => 'stop',
+          :ida => i,
+        :description => render_to_string(:partial => "/recorridos/stop_infowindow", :locals => { :stop => stop})}
       end
     end
 
@@ -80,7 +80,6 @@ class RecorridosController < ApplicationController
           texto_diferencia <<  dif_secs.to_s+" segundos." if dif_secs > 0
 
           # calcular la retencion
-          # raise 'hh'
           recorrido = Recorrido.where(:id => id.to_i).first
           tiempo_retencion = 0
           retencion_correcta = nil
@@ -89,33 +88,32 @@ class RecorridosController < ApplicationController
             bus['sentido'] == 'I' ? secuencia = recorrido.get_secuencias_of_the_hour[0] : secuencia = recorrido.get_secuencias_of_the_hour[1]
             stop = secuencia.stops.where(:id => retencion['paradero_id']).first
             if not stop.nil? and stop.origin_distance > bus['distancia_origen']
-              tiempo_retencion = -1 if retencion['segundos_retencion'] >= 1
-              tiempo_retencion = 1 if retencion['segundos_retencion'] <= -1
+              tiempo_retencion = retencion['segundos_retencion']
+              # tiempo_retencion = 1 if retencion['segundos_retencion'] <= -1
               retencion_correcta = retencion if retencion['segundos_retencion'] != 0
               break;
             end
+          end
+
+          # le agrego a la ruta algo si es necesario poner el logo de headway
+          agregado_headway = ''
+          if bus['minutos_headway'] != 'NaN'
+            agregado_headway = '_hg' if bus['minutos_headway'] < 1
+            agregado_headway = '_hr' if bus['minutos_headway'] > 10
           end
 
           @buses2 << {
             :lat => bus['gps_latitud'],
             :lng => bus['gps_longitud'],
             :width => 41,
-            :height => 16,
+            :height => 32,
             :direction => bus['sentido'],
             :patente => bus['patente'],
             :zindex => 1000,
             :type => 'bus',
             :stop => tiempo_retencion,
-            :picture => "../images/bus_"+bus['sentido']+"_16.png",
+            :picture => "../images/bus_"+bus['sentido']+"_16"+agregado_headway.to_s+".png",
             :description => render_to_string(:partial => "/buses/infowindow", :locals => { :bus => bus, :time_dif => texto_diferencia, :retencion => retencion_correcta})
-          }
-          @signs << {
-            :lat => bus['gps_latitud'],
-            :lng => bus['gps_longitud'],
-            :width => 18,
-            :height => 18,
-            :zIndex => 1001,
-            :picture => "../images/stop_18.png"
           }
         end
       }
