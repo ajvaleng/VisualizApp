@@ -2,7 +2,7 @@ class DataFilesController < ApplicationController
   # GET /data_files
   # GET /data_files.json
   def index
-    @data_files = DataFile.all
+    @data_files = current_user.data_files
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,9 +15,14 @@ class DataFilesController < ApplicationController
   def show
     @data_file = DataFile.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @data_file }
+    if @data_file.has_acces(current_user)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @data_file }
+      end
+    else
+      flash[:error] = "No tiene acceso a esa informacion"
+      redirect_to data_files_path
     end
   end
 

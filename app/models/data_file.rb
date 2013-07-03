@@ -15,5 +15,9 @@ class DataFile
       end
     end
   end
-  
+
+  def has_acces(user)
+    DataFile.first.users.include?(user)
+  end
+
 end

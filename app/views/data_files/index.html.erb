@@ -1,23 +1,18 @@
-<h1>Listing data_files</h1>
+<h3>Archivos</h3>
 
-<table>
+<div class="span8">
+  <table class="table table-striped">
   <tr>
-    <th>File</th>
-    <th></th>
-    <th></th>
+    <th>Archivo</th>
     <th></th>
   </tr>
 
 <% @data_files.each do |data_file| %>
   <tr>
     <td><%= data_file.file.url.split('/').last %></td>
-    <td><%= link_to 'Show', data_file %></td>
-    <td><%= link_to 'Edit', edit_data_file_path(data_file) %></td>
-    <td><%= link_to 'Destroy', data_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%=link_to 'Bajar Archivo', data_file.file_url%></td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Data file', new_data_file_path %>
+</div>
