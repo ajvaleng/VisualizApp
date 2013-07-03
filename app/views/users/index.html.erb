@@ -1,12 +1,12 @@
-<h3>Users</h3>
+<h3>Cuentas</h3>
 <div class="span8">
 <table class="table table-condensed">
   <thead>
     <tr>
-      <th>Username</th>
+      <th>Nombre</th>
       <th>Email</th>
-      <th>Registered</th>
-      <th>Role</th>
+      <th>Fecha de Registro</th>
+      <th>Rol</th>
       <th>Operador</th>
       <th></th>
       <th></th>
@@ -21,14 +21,14 @@
       <td><%= user.roles.first.name.titleize unless user.roles.first.nil? %></td>
       <td><%= user.operator.name unless user.operator.nil? %></td>
       <td>
-        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="btn btn-mini" type="button">Change role</a>
+        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="btn btn-mini" type="button">Cambiar Rol</a>
         <%= render user %>
       </td>
-      <td><%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
+      <td><%= link_to("Borrar Cuenta", user_path(user), :data => { :confirm => "Esta seguro?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
 
-<%= link_to 'Nuevo Usuario', new_user_path  %>
+<%= link_to 'Nueva Cuenta', new_user_path  %>
 </div>

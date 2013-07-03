@@ -2,7 +2,11 @@ class UsersController < ApplicationController
 	before_filter :authenticate_user!
 
 	def index
-		@users = User.all
+		if current_user.has_role? 'Administrador'
+			@users = User.all
+		else
+			@users = User.where(:operator_id => current_user.operator_id)
+		end
 	end
 
 	def show
@@ -19,6 +23,11 @@ class UsersController < ApplicationController
 			@user.role_ids << params[:user][:role_ids]
 			@user.role_ids.uniq
 		end
+
+		if params[:user][:operator_id].blank?
+			@user.operator_id = current_user.operator_id
+		end
+
 		if @user.save
 			flash[:notice] = "Successfully created User."
 			redirect_to users_path
@@ -45,12 +54,12 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
-    @user = User.find(params[:id])
-    if @user.destroy
-      flash[:notice] = "Usuario eliminado correctamente."
-      redirect_to users_path
-    end
-  end
+		@user = User.find(params[:id])
+		if @user.destroy
+			flash[:notice] = "Usuario eliminado correctamente."
+			redirect_to users_path
+		end
+	end
 
 
 

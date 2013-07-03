@@ -9,7 +9,7 @@
     </li>
     <% if current_user.has_role? "Administrador" or current_user.has_role? "AdminOperador"  %>
       <li>
-      <%= link_to 'Usuarios', users_path  %>
+      <%= link_to 'Cuentas', users_path  %>
       </li>
       <% end %>
       <% if current_user.has_role? "Administrador" or current_user.has_role? "Colaborador"  %>
@@ -17,7 +17,7 @@
       <%= link_to 'Operadores', operators_path %>
       </li>
       <% end %>
-      <% if current_user.has_role? "Operador"  %>
+      <% if current_user.has_role? "Operador"  or current_user.has_role? "AdminOperador" %>
       <li>
       <%= link_to 'Recorridos', operator_path(current_user.operator_id) %>
       </li>

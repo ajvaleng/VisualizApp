@@ -25,15 +25,27 @@
     <%= f.text_field :password %>
   </div>
 
-  <div class="field">
-  <%= f.label 'Rol' %><br />
-  <%= f.input :role_ids, :collection => Role.all, :as => :radio_buttons, :label_method => lambda {|t| t.name.titleize}, :label => false, :item_wrapper_class => 'inline', checked: @user.role_ids.first %>
-  </div>
+  <% if current_user.has_role? "AdminOperador" %>
 
-  <div class="field">
-  <%= f.label 'Operador' %><br />
-  <%= f.input :operator_id, :collection => Operator.all, :as => :select, :label_method => lambda {|t| t.name}, :label => false, :item_wrapper_class => 'inline', checked: @user.role_ids.first %>
-  </div>
+    <div class="field">
+      <%= f.label 'Rol' %><br />
+      <%= f.input :role_ids, :collection => Role.not_administrable, :as => :radio_buttons, :label_method => lambda {|t| t.name.titleize}, :label => false, :item_wrapper_class => 'inline', checked: current_user.role_ids.first %>
+    </div>
+
+  <% end %>
+
+  <% if current_user.has_role? "Administrador" %>
+
+    <div class="field">
+      <%= f.label 'Rol' %><br />
+      <%= f.input :role_ids, :collection => Role.all, :as => :radio_buttons, :label_method => lambda {|t| t.name.titleize}, :label => false, :item_wrapper_class => 'inline', checked: Role.first.id %>
+    </div>
+
+    <div class="field">
+      <%= f.label 'Operador' %><br />
+      <%= f.input :operator_id, :collection => Operator.all, :as => :select, :label_method => lambda {|t| t.name}, :label => false, :item_wrapper_class => 'inline', checked: Role.first.id %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>
