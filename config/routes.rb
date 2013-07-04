@@ -17,5 +17,5 @@ Visualizapp::Application.routes.draw do
   devise_for :users, :path_prefix => 'my'
   resources :users
   
-  match "recoleccions" => "recoleccion#create"
+  match "recoleccions" => "recoleccions#create"
 end
