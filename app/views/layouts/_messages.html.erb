@@ -1,5 +1,11 @@
+
+
+
+<table border=4 bordercolor=#BF1156 bgcolor=#BF1156>
+
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+   <tr bgcolor=#BF1156><td bgcolor=#BF1156><b><span style="color: white;"><%= content_tag :div, msg, :id => "flash_#{name}" %> </span><b></td></tr>
   <% end %>
 <% end %>
+</table>
