@@ -54,10 +54,11 @@ class User
   belongs_to :operator
 
   rails_admin do
-    list do
-      field :email
-      field :name
-    end
+    hide
+    # list do
+    #   field :email
+    #   field :name
+    # end
   end
 
   def operator
