@@ -1,12 +1,6 @@
 <%= link_to "Visualizapp", root_path, :class => 'brand' %>
+<% if user_signed_in? %>
 <ul class="nav">
-  <% if user_signed_in? %>
-    <li>
-    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
-    </li>
-    <li>
-    <%= link_to 'Editar Cuenta', edit_user_registration_path %>
-    </li>
     <% if current_user.has_role? "Administrador" or current_user.has_role? "AdminOperador"  %>
       <li>
       <%= link_to 'Cuentas', users_path  %>
@@ -25,9 +19,21 @@
       <%= link_to 'Archivos', data_files_path %>
       </li>
       <% end %>
-
+</ul>
+<ul class='nav' style='float:right;'>
+  <li>
+    <%= link_to current_user.email, edit_user_registration_path %>
+    </li>
+  <li>
+    <%= link_to destroy_user_session_path, :method=>'delete' do %>
+    <span class="label label-important">Salir</span>
+    <% end %>
+    </li>
+</ul>
   <% else %>
+  <ul class="nav">
     <li>
     <%= link_to 'Login', new_user_session_path %>
     </li>
+  </ul>
   <% end %>
