@@ -1,17 +1,19 @@
 <%= link_to "Visualizapp", root_path, :class => 'brand' %>
 <% if user_signed_in? %>
 <ul class="nav">
-    <% if current_user.has_role? "Administrador" or current_user.has_role? "AdminOperador"  %>
+      <% if current_user.has_role? "Administrador" or current_user.has_role? "AdminOperador"  %>
       <li>
       <%= link_to 'Cuentas', users_path  %>
 	  </li>
 	  <li>
 	  <%= link_to 'Recolecciones', rails_admin.index_path('Recoleccion')  %>
       </li>
-   	  <li>
+      <% end %>
+	  <% if current_user.has_role? "Administrador" 
+	  <li>
 	  <%= link_to 'Archivos', rails_admin.index_path('DataFile')  %>
       </li>
-      <% end %>
+	  <% end %>
       <% if current_user.has_role? "Administrador" or current_user.has_role? "Colaborador"  %>
       <li>
       <%= link_to 'Operadores', operators_path %>
